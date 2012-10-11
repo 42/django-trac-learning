@@ -5,7 +5,8 @@ from sklearn.grid_search import GridSearchCV
 from sklearn import metrics
 from sklearn.svm import SVR
 
-from fun1 import get_data
+#from fun1 import get_data
+from fun2 import get_data
 
 def learn():
     tickets, times = get_data()
