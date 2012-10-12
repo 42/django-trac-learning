@@ -7,15 +7,16 @@ from sklearn.svm import SVR
 
 #from fun1 import get_data
 #from fun2 import get_data
-from fun3 import get_data
+#from fun3 import get_data
+from fun4 import get_data
 
-def learn(kernel='rbf', param_grid=None):
+def learn(kernel='rbf', param_grid=None, verbose=False):
     tickets, times = get_data()
 
     tickets_train, tickets_test, times_train, times_test = \
         cross_validation.train_test_split(tickets, times, 
                                           test_size=0.2, random_state=0)
-    clf = GridSearchCV(estimator=SVR(kernel=kernel), 
+    clf = GridSearchCV(estimator=SVR(kernel=kernel, verbose=verbose), 
                        param_grid=param_grid,
                        n_jobs=-1)
     clf.fit(tickets_train, times_train)
@@ -30,4 +31,4 @@ def learn(kernel='rbf', param_grid=None):
         math.sqrt(train_error)/(24*3600), math.sqrt(test_error)/(24*3600))
     print 'Best C: %.1e' % clf.best_estimator_.C
 
-learn('rbf', param_grid=dict(C=np.logspace(-1,10,5)))
+learn('rbf', param_grid=dict(C=np.logspace(-1,10,5)), verbose=True)
