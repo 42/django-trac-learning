@@ -31,4 +31,8 @@ def learn(kernel='rbf', param_grid=None, verbose=False):
         math.sqrt(train_error)/(24*3600), math.sqrt(test_error)/(24*3600))
     print 'Best C: %.1e' % clf.best_estimator_.C
 
-learn('rbf', param_grid=dict(C=np.logspace(-1,10,5)), verbose=True)
+print 'RBF'
+learn('rbf', param_grid=dict(C=np.logspace(-1,10,5)))
+
+print '\nLinear'
+learn('linear', param_grid=dict(C=np.logspace(-1,5,5)))
