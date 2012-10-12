@@ -9,7 +9,8 @@ from sklearn.svm import SVR
 #from fun2 import get_data
 #from fun3 import get_data
 #from fun4 import get_data
-from fun5 import get_data
+#from fun5 import get_data
+from fun6 import get_data
 
 def learn(kernel='rbf', param_grid=None, verbose=False):
     tickets, times = get_data()
