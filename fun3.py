@@ -38,4 +38,6 @@ def get_data():
     tickets = sp.hstack((tickets, TfidfTransformer().fit_transform(
                 CountVectorizer().fit_transform(reporters))))
 
+    scaler = preprocessing.Scaler(with_mean=False).fit(tickets)
+    tickets = scaler.transform(tickets)
     return tickets, times
