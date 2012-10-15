@@ -12,15 +12,14 @@ from fun1 import get_data
 #from fun5 import get_data
 #from fun6 import get_data
 
-def learn(kernel='rbf', param_grid=None, verbose=False):
+def learn(params, kernel='rbf', verbose=True):
     tickets, times = get_data()
 
     tickets_train, tickets_test, times_train, times_test = \
         cross_validation.train_test_split(tickets, times, 
                                           test_size=0.2, random_state=0)
-    clf = GridSearchCV(estimator=SVR(kernel=kernel, verbose=verbose), 
-                       param_grid=param_grid,
-                       n_jobs=-1)
+    clf = SVR(kernel=kernel, verbose=verbose, C=params[0], gamma=params[1])
+    print 'For', clf
     clf.fit(tickets_train, times_train)
 
     times_train_predict = clf.predict(tickets_train)
@@ -29,17 +28,20 @@ def learn(kernel='rbf', param_grid=None, verbose=False):
     train_error = metrics.mean_squared_error(times_train, times_train_predict)
     test_error = metrics.mean_squared_error(times_test, times_test_predict)
 
-    print 'Train error: %.1f Test error: %.2f' % (
+    print 'Train error: %.1f Test error: %.1f' % (
         math.sqrt(train_error)/(24*3600), math.sqrt(test_error)/(24*3600))
-    print 'Best C: %.1e' % clf.best_estimator_.C
-    try:
-        print 'Best gamma: %.1e' % clf.best_estimator_.gamma
-    except: pass
+    return test_error
+
+from scipy.optimize import fmin, fmin_bfgs
 
 print 'RBF'
-learn('rbf', param_grid=dict(C=np.logspace(6,8,4),
-                             gamma=np.logspace(7,20,4)
-                             ))#, verbose=True)
+print fmin(learn, [11e7, 9e7],
+           full_output = True,
+           disp = True)
+
+# learn('rbf', param_grid=dict(C=np.logspace(6,8,4),
+#                              gamma=np.logspace(7,20,4)
+#                              ))#, verbose=True)
 
 # print '\nLinear'
 # learn('linear', param_grid=dict(C=np.logspace(1,5,5)), verbose=True)
