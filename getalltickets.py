@@ -5,4 +5,4 @@ url = 'https://code.djangoproject.com/query?format=csv&col=id&col=time' \
     + '&col=component&order=priority' 
 tickets = urllib2.urlopen(url).read()
 
-open('2012-10-09.csv','w').write(tickets)
+open('2013-04-27.csv','w').write(tickets)

@@ -34,8 +34,8 @@ def get_data(ticket):
     de = bs.find_all('div', 'description')[0]
     return close_time, de.text
 
-tickets_file = csv.reader(open('2012-10-09.csv'))
-output = csv.writer(open('2012-10-09.close.csv','w'))
+tickets_file = csv.reader(open('2013-04-27.csv'))
+output = csv.writer(open('2013-04-27.close.csv','w'))
 
 tickets_file.next()
 for id, time, changetime, reporter, summary, status, owner, type, component \
